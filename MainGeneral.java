@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ForkJoinPool;
@@ -10,37 +11,34 @@ public class MainGeneral {
         AtomicBoolean foundSolution = new AtomicBoolean(false);
         ConcurrentLinkedQueue<Object> solutions = new ConcurrentLinkedQueue<>();
         List<Integer> initialMoves = problem.getPossibleMoves();
-        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        List<ParallelBacktracking> tasks = new ArrayList<>();
 
-        // 1. INICIAR CRONÓMETRO
+        // 1. INICIAR CRONÓMETRO EXACTO
         long startTime = System.nanoTime();
 
+        // Creamos y disparamos las tareas en el pool común de hilos
         for (int move : initialMoves) {
             problem.applyMove(move);
             ParallelBacktracking parallelBacktracking = new ParallelBacktracking(problem, foundSolution, solutions);
-            
-            // Ejecuta de forma directa y segura en el pool de hilos
-            forkJoinPool.execute(parallelBacktracking);
-            
+            tasks.add(parallelBacktracking);
+            parallelBacktracking.fork(); // Dispara el hilo de inmediato
             problem.undoMove(move);
         }
 
-        // Una pequeña espera para dar tiempo a que los hilos procesen antes de leer la cola
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        // Obliga al hilo principal a esperar que CADA tarea termine de verdad
+        for (ParallelBacktracking task : tasks) {
+            task.join(); 
         }
 
-        // 2. DETENER CRONÓMETRO
+        // 2. DETENER CRONÓMETRO INMEDIATAMENTE
         long endTime = System.nanoTime();
 
-        // Mostrar soluciones encontradas
+        // Mostrar soluciones encontradas si las hay
         while (!solutions.isEmpty()) {
             System.out.println(solutions.poll());
         }
 
-        // 3. MOSTRAR EL TIEMPO EN PANTALLA
+        // 3. MOSTRAR EL TIEMPO REAL
         System.out.println("Tiempo de ejecucion: " + (endTime - startTime) / 1000000.0 + " ms");
     }
 }
