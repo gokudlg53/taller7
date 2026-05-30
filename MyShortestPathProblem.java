@@ -3,7 +3,7 @@ import java.util.List;
 
 public class MyShortestPathProblem implements ShortestPathProblem {
     private final List<Integer> currentPath;
-    private final int maxDepth = 4;
+    private final int maxDepth = 5; // Sincronizado a 5
 
     public MyShortestPathProblem() {
         this.currentPath = new ArrayList<>();
@@ -34,7 +34,7 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
         if (currentPath.size() < maxDepth) {
-            for (int i = 1; i <= 15; i++) {
+            for (int i = 1; i <= 15; i++) { // Sincronizado a 15
                 moves.add(i);
             }
         }
@@ -50,13 +50,8 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     public int getCurrentPathLength() {
         int sum = 0;
         for (int move : currentPath) {
-            // Penalización: si es 1, 2 o 3, el costo es alto (100)
-            // Si es mayor a 3, el costo es (16 - move), premiando los números más altos
-            if (move <= 3) {
-                sum += 100;
-            } else {
-                sum += (16 - move);
-            }
+            // Regla: 1, 2, 3 son caros, el resto es más barato
+            sum += (move <= 3) ? 100 : (16 - move);
         }
         return sum;
     }
