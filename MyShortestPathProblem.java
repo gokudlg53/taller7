@@ -3,14 +3,12 @@ import java.util.List;
 
 public class MyShortestPathProblem implements ShortestPathProblem {
     private final List<Integer> currentPath;
-    private final int maxDepth = 4; // Controla la profundidad para que no explote
+    private final int maxDepth = 4; 
 
-    // Constructor para el inicio
     public MyShortestPathProblem() {
         this.currentPath = new ArrayList<>();
     }
 
-    // Constructor que usa el clonador (Para que cada hilo tenga su propia copia)
     public MyShortestPathProblem(List<Integer> path) {
         this.currentPath = new ArrayList<>(path);
     }
@@ -36,8 +34,10 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
         if (currentPath.size() < maxDepth) {
-            moves.add(1);
-            moves.add(2);
+            // Ofrecemos opciones diferentes en cada paso del camino
+            moves.add(5);
+            moves.add(3);
+            moves.add(8);
         }
         return moves;
     }
@@ -50,8 +50,14 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     @Override
     public int getCurrentPathLength() {
         int sum = 0;
-        for (int move : currentPath) {
-            sum += move;
+        // Simulamos penalizaciones: en el segundo paso (índice 1), el movimiento 3 es carísimo
+        for (int i = 0; i < currentPath.size(); i++) {
+            int move = currentPath.get(i);
+            if (i == 1 && move == 3) {
+                sum += 50; // Penalización enorme por elegir el 3 aquí
+            } else {
+                sum += move;
+            }
         }
         return sum;
     }
