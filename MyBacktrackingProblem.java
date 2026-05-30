@@ -2,37 +2,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyBacktrackingProblem implements BacktrackingProblem {
-    private int step = 0;
-    private final int targetSteps = 5;
+    private final List<Integer> currentPath;
+    private final int maxDepth = 5; // Sincronizado a 5
+
+    public MyBacktrackingProblem() {
+        this.currentPath = new ArrayList<>();
+    }
+
+    public MyBacktrackingProblem(List<Integer> path) {
+        this.currentPath = new ArrayList<>(path);
+    }
 
     @Override
     public boolean isSolution() {
-        return step == targetSteps;
+        return currentPath.size() == maxDepth;
     }
 
     @Override
     public void applyMove(int move) {
-        step++;
+        currentPath.add(move);
     }
 
     @Override
     public void undoMove(int move) {
-        step--;
+        if (!currentPath.isEmpty()) {
+            currentPath.remove(currentPath.size() - 1);
+        }
     }
 
     @Override
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
-        if (step < targetSteps) {
-            moves.add(1);
-            moves.add(2);
-            moves.add(3);
+        if (currentPath.size() < maxDepth) {
+            for (int i = 1; i <= 15; i++) { // Sincronizado a 15
+                moves.add(i);
+            }
         }
         return moves;
     }
 
     @Override
-    public Object getSolution() {
-        return "Solucion General Encontrada a profundidad " + targetSteps;
+    public List<Integer> getCurrentPath() {
+        return new ArrayList<>(currentPath);
     }
 }
