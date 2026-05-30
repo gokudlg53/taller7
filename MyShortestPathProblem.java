@@ -38,6 +38,9 @@ public class MyShortestPathProblem implements ShortestPathProblem {
             moves.add(5);
             moves.add(3);
             moves.add(8);
+            moves.add(6);
+            moves.add(2);
+            moves.add(1);
         }
         return moves;
     }
