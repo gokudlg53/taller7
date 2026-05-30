@@ -1,4 +1,5 @@
 import java.util.List;
+
 public interface ShortestPathProblem {
     boolean isSolution();
     void applyMove(int move);
