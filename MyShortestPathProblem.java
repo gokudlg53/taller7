@@ -4,7 +4,7 @@ import java.util.List;
 public class MyShortestPathProblem implements ShortestPathProblem {
     private List<Integer> currentPath = new ArrayList<>();
     private int currentLength = 0;
-    private final int maxDepth = 12; 
+    private final int maxDepth = 5; // Reducido para evitar recursión infinita
 
     @Override
     public boolean isSolution() {
@@ -28,6 +28,7 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     @Override
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
+        // Solo permite movimientos si no hemos alcanzado el límite
         if (currentPath.size() < maxDepth) {
             moves.add(1);
             moves.add(2);
