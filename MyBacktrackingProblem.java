@@ -30,20 +30,6 @@ public class MyBacktrackingProblem implements BacktrackingProblem {
         }
         return moves;
     }
-    @Override
-    public int getCurrentPathLength() {
-        int sum = 0;
-        for (int move : currentPath) {
-            // Ejemplo: Los números bajos (1, 2, 3) tienen un costo alto (ej. 100).
-            // Los números altos (14, 15) tienen un costo bajo (ej. 1).
-            if (move <= 3) {
-                sum += 100; 
-            } else {
-                sum += (16 - move); // Los más altos son más baratos
-            }
-        }
-        return sum;
-    }
 
     @Override
     public Object getSolution() {
