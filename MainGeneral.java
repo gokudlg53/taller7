@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Main {
+public class MainGeneral {
     public static void main(String[] args) {
         // Ejecución 1: Backtracking General
         System.out.println("--- Ejecutando Backtracking General ---");
