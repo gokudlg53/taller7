@@ -14,7 +14,7 @@ public class MainGeneral {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         List<ParallelBacktracking> tasks = new ArrayList<>();
 
-        // Iniciar cronómetro
+        // 1. INICIAR CRONÓMETRO
         long startTime = System.nanoTime();
 
         for (int move : initialMoves) {
@@ -25,14 +25,15 @@ public class MainGeneral {
         }
         forkJoinPool.invokeAll(tasks);
 
-        // Detener cronómetro
+        // 2. DETENER CRONÓMETRO
         long endTime = System.nanoTime();
 
+        // Mostrar soluciones encontradas si las hay
         while (!solutions.isEmpty()) {
             System.out.println(solutions.poll());
         }
 
-        // Mostrar el tiempo total en milisegundos
+        // 3. MOSTRAR EL TIEMPO EN PANTALLA
         System.out.println("Tiempo de ejecucion: " + (endTime - startTime) / 1000000.0 + " ms");
     }
 }
