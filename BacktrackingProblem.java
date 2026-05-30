@@ -1,0 +1,7 @@
+public interface BacktrackingProblem {
+    boolean isSolution();
+    void applyMove(int move);
+    void undoMove(int move);
+    List<Integer> getPossibleMoves();
+    Object getSolution();
+}
