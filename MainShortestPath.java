@@ -10,23 +10,23 @@ public class MainShortestPath {
         
         ParallelShortestPath parallelShortestPath = new ParallelShortestPath(pathProblem, initialBestPathLength);
         
-        // 1. INICIAR CRONÓMETRO EXACTO
         long startTime = System.nanoTime();
-        
-        // invoke() bloquea el hilo principal de manera limpia hasta que todo el árbol paralelo termine
         List<Integer> shortestPath = forkJoinPool.invoke(parallelShortestPath);
-        
-        // 2. DETENER CRONÓMETRO INMEDIATAMENTE
         long endTime = System.nanoTime();
 
         if (shortestPath != null) {
-            System.out.println("Camino mas corto: " + shortestPath);
-            System.out.println("Longitud del camino: " + shortestPath.size());
+            System.out.println("Camino mas corto (paso a paso): " + shortestPath);
+            
+            // Cálculo del costo total para verificación
+            int costoTotal = 0;
+            for(int move : shortestPath) {
+                costoTotal += (11 - move);
+            }
+            System.out.println("Costo total calculado: " + costoTotal);
         } else {
             System.out.println("No se encontro ningun camino.");
         }
         
-        // 3. MOSTRAR EL TIEMPO REAL
         System.out.println("Tiempo de ejecucion: " + (endTime - startTime) / 1000000.0 + " ms");
     }
 }
