@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicBoolean;
-public class Main {
+public class MainGeneral {
     public static void main(String[] args) {
         BacktrackingProblem problem = new MyBacktrackingProblem(); // Reemplaza esto con la instancia de tu problema de backtracking
         AtomicBoolean foundSolution = new AtomicBoolean(false);
