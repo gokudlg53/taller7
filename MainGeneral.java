@@ -12,23 +12,27 @@ public class MainGeneral {
         ConcurrentLinkedQueue<Object> solutions = new ConcurrentLinkedQueue<>();
         List<Integer> initialMoves = problem.getPossibleMoves();
         ForkJoinPool forkJoinPool = new ForkJoinPool();
+        List<ParallelBacktracking> tasks = new ArrayList<>();
+
+        // Iniciar cronómetro
+        long startTime = System.nanoTime();
 
         for (int move : initialMoves) {
             problem.applyMove(move);
             ParallelBacktracking parallelBacktracking = new ParallelBacktracking(problem, foundSolution, solutions);
-            forkJoinPool.execute(parallelBacktracking);
+            tasks.add(parallelBacktracking);
             problem.undoMove(move);
         }
+        forkJoinPool.invokeAll(tasks);
 
-        // Espera activa simple hasta que termine o encuentre solución
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        // Detener cronómetro
+        long endTime = System.nanoTime();
 
         while (!solutions.isEmpty()) {
             System.out.println(solutions.poll());
         }
+
+        // Mostrar el tiempo total en milisegundos
+        System.out.println("Tiempo de ejecucion: " + (endTime - startTime) / 1000000.0 + " ms");
     }
 }
