@@ -34,8 +34,8 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
         if (currentPath.size() < maxDepth) {
-            // Rango de 1 a 15
-            for (int i = 1; i <= 15; i++) {
+            // Permitimos del 1 al 10
+            for (int i = 1; i <= 10; i++) {
                 moves.add(i);
             }
         }
@@ -51,8 +51,9 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     public int getCurrentPathLength() {
         int sum = 0;
         for (int move : currentPath) {
-            // Costo directo: el valor del número es su costo
-            sum += move;
+            // Regla: 1 vale 10, 10 vale 1
+            sum += (11 - move);
         }
         return sum;
     }
+}
