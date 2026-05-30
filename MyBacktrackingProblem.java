@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyShortestPathProblem implements ShortestPathProblem {
+public class MyBacktrackingProblem implements BacktrackingProblem {
     private final List<Integer> currentPath;
     private final int maxDepth = 4;
 
-    public MyShortestPathProblem() {
+    public MyBacktrackingProblem() {
         this.currentPath = new ArrayList<>();
     }
 
-    public MyShortestPathProblem(List<Integer> path) {
+    public MyBacktrackingProblem(List<Integer> path) {
         this.currentPath = new ArrayList<>(path);
     }
 
@@ -34,7 +34,7 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
         if (currentPath.size() < maxDepth) {
-            for (int i = 1; i <= 15; i++) {
+            for (int i = 1; i <= 5; i++) { // Ajusta el rango según tu ejercicio original
                 moves.add(i);
             }
         }
@@ -44,14 +44,5 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     @Override
     public List<Integer> getCurrentPath() {
         return new ArrayList<>(currentPath);
-    }
-
-    @Override
-    public int getCurrentPathLength() {
-        int sum = 0;
-        for (int move : currentPath) {
-            sum += move;
-        }
-        return sum;
     }
 }
