@@ -3,7 +3,7 @@ import java.util.List;
 
 public class MyBacktrackingProblem implements BacktrackingProblem {
     private final List<Integer> currentPath;
-    private final int maxDepth = 5; // Sincronizado a 5
+    private final int maxDepth = 5;
 
     public MyBacktrackingProblem() {
         this.currentPath = new ArrayList<>();
@@ -34,7 +34,7 @@ public class MyBacktrackingProblem implements BacktrackingProblem {
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
         if (currentPath.size() < maxDepth) {
-            for (int i = 1; i <= 15; i++) { // Sincronizado a 15
+            for (int i = 1; i <= 15; i++) {
                 moves.add(i);
             }
         }
