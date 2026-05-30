@@ -16,11 +16,6 @@ public class ParallelBacktracking extends RecursiveAction {
     }
 
     @Override
-    public void run() {
-        compute();
-    }
-
-    @Override
     protected void compute() {
         if (foundSolution.get()) {
             return;
