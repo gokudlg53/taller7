@@ -1,4 +1,3 @@
-import java.util.List;
 public interface BacktrackingProblem {
     boolean isSolution();
     void applyMove(int move);
