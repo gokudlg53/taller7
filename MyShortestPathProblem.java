@@ -50,7 +50,13 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     public int getCurrentPathLength() {
         int sum = 0;
         for (int move : currentPath) {
-            sum += move;
+            // Penalización: si es 1, 2 o 3, el costo es alto (100)
+            // Si es mayor a 3, el costo es (16 - move), premiando los números más altos
+            if (move <= 3) {
+                sum += 100;
+            } else {
+                sum += (16 - move);
+            }
         }
         return sum;
     }
