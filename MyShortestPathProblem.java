@@ -2,9 +2,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyShortestPathProblem implements ShortestPathProblem {
-    private List<Integer> currentPath = new ArrayList<>();
-    private int currentLength = 0;
-    private final int maxDepth = 5; // Reducido para evitar recursión infinita
+    private final List<Integer> currentPath;
+    private final int maxDepth = 4; // Controla la profundidad para que no explote
+
+    // Constructor para el inicio
+    public MyShortestPathProblem() {
+        this.currentPath = new ArrayList<>();
+    }
+
+    // Constructor que usa el clonador (Para que cada hilo tenga su propia copia)
+    public MyShortestPathProblem(List<Integer> path) {
+        this.currentPath = new ArrayList<>(path);
+    }
 
     @Override
     public boolean isSolution() {
@@ -14,13 +23,11 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     @Override
     public void applyMove(int move) {
         currentPath.add(move);
-        currentLength += move;
     }
 
     @Override
     public void undoMove(int move) {
         if (!currentPath.isEmpty()) {
-            currentLength -= move;
             currentPath.remove(currentPath.size() - 1);
         }
     }
@@ -28,7 +35,6 @@ public class MyShortestPathProblem implements ShortestPathProblem {
     @Override
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
-        // Solo permite movimientos si no hemos alcanzado el límite
         if (currentPath.size() < maxDepth) {
             moves.add(1);
             moves.add(2);
@@ -43,6 +49,10 @@ public class MyShortestPathProblem implements ShortestPathProblem {
 
     @Override
     public int getCurrentPathLength() {
-        return currentLength;
+        int sum = 0;
+        for (int move : currentPath) {
+            sum += move;
+        }
+        return sum;
     }
 }
