@@ -16,21 +16,21 @@ public class ParallelShortestPath extends RecursiveTask<List<Integer>> {
         if (problem.isSolution()) {
             return problem.getCurrentPath();
         }
+
         List<Integer> shortestPath = null;
         List<Integer> moves = problem.getPossibleMoves();
         List<ParallelShortestPath> tasks = new ArrayList<>();
 
         for (int move : moves) {
-            problem.applyMove(move);
-            if (problem.getCurrentPathLength() < bestPathLength) {
-                ParallelShortestPath child = new ParallelShortestPath(problem, bestPathLength);
-                tasks.add(child);
-            }
-            problem.undoMove(move);
-        }
+            // Clonamos el problema aquí para aislar el hilo
+            MyShortestPathProblem clonedProblem = new MyShortestPathProblem(problem.getCurrentPath());
+            clonedProblem.applyMove(move);
 
-        for (ParallelShortestPath task : tasks) {
-            task.fork();
+            if (clonedProblem.getCurrentPathLength() < bestPathLength) {
+                ParallelShortestPath child = new ParallelShortestPath(clonedProblem, bestPathLength);
+                tasks.add(child);
+                child.fork(); // Despega el hilo en paralelo de forma segura
+            }
         }
 
         for (ParallelShortestPath task : tasks) {
@@ -40,6 +40,7 @@ public class ParallelShortestPath extends RecursiveTask<List<Integer>> {
                 bestPathLength = path.size();
             }
         }
+
         return shortestPath;
     }
 }
